@@ -8,6 +8,7 @@ namespace SystemInfoGrabber
     {
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("POBIERANIE DANYCH O SYSTEMIE");
             Console.WriteLine("");
 
