@@ -1,16 +1,49 @@
-﻿                float cpuUsage = cpuCounter.NextValue();
-                ulong totalRam = computerInfo.TotalPhysicalMemory;
-                ulong availableRam = computerInfo.AvailablePhysicalMemory;
-                ulong usedRam = totalRam - availableRam;
+using System;
+using System.IO;
+using System.Diagnostics;
 
-                Console.Clear();
-                Console.WriteLine("MONITOR ZUŻYCIA ZASOBÓW\n");
+namespace SystemInfoGrabber
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("POBIERANIE DANYCH O SYSTEMIE");
+            Console.WriteLine("");
 
-                Console.WriteLine($"CPU: {cpuUsage:F1} %");
-                Console.WriteLine($"RAM użyty: {FormatBytes(usedRam)}");
-                Console.WriteLine($"RAM dostępny: {FormatBytes(availableRam)}");
-                Console.WriteLine($"RAM całkowity: {FormatBytes(totalRam)}");
+            //Podstawowe informacje o środowisku
+            Console.WriteLine("System");
+            Console.WriteLine($"Nazwa komputera: {Environment.MachineName}");
+            Console.WriteLine($"Użytkownik: {Environment.UserName}");
+            Console.WriteLine($"System operacyjny: {Environment.OSVersion}");
+            Console.WriteLine($"Ilość procesorów (logicznych): {Environment.ProcessorCount}");
 
-                Console.WriteLine("\nOdświeżanie co 1 sekundę...");
-                Thread.Sleep(1000);
+            //Informacje o dyskach
+            Console.WriteLine("\nDyski");
+            DriveInfo[] allDrives = DriveInfo.GetDrives();
 
+            foreach (DriveInfo d in allDrives)
+            {
+                if (d.IsReady)
+                {
+                    Console.WriteLine($"Dysk {d.Name}");
+                    Console.WriteLine($"  Format: {d.DriveFormat}");
+                    double freeSpace = d.TotalFreeSpace / (1024.0 * 1024.0 * 1024.0);
+                    double totalSpace = d.TotalSize / (1024.0 * 1024.0 * 1024.0);
+
+                    Console.WriteLine($"  Wolne miejsce: {freeSpace:0.00} GB");
+                    Console.WriteLine($"  Rozmiar całkowity: {totalSpace:0.00} GB");
+                }
+            }
+
+            //Uptime (Czas pracy systemu)
+            // Environment.TickCount zwraca milisekundy, dzielimy by uzyskać godziny
+            TimeSpan uptime = TimeSpan.FromMilliseconds(Environment.TickCount64);
+            Console.WriteLine($"\n--- Inne ---");
+            Console.WriteLine($"Czas pracy systemu: {uptime.Days} dni, {uptime.Hours} godz, {uptime.Minutes} min");
+
+            Console.WriteLine("\nNaciśnij dowolny klawisz, aby zakończyć...");
+            Console.ReadKey();
+        }
+    }
+}
