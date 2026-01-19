@@ -8,14 +8,6 @@ namespace SystemInfoGrabber
     {
         static void Main(string[] args)
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("=== POBIERANIE DANYCH O SYSTEMIE ===");
-            Console.ResetColor();
-
-            // Przy wyświetlaniu dysków:
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"\nDysk {d.Name}");
-            Console.ResetColor();
             Console.WriteLine("POBIERANIE DANYCH O SYSTEMIE");
             Console.WriteLine("");
 
