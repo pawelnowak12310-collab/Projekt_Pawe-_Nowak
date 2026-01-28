@@ -43,6 +43,7 @@ namespace SystemInfoGrabber
             Console.WriteLine($"Czas pracy systemu: {uptime.Days} dni, {uptime.Hours} godz, {uptime.Minutes} min");
 
             Console.WriteLine("\nNaciśnij dowolny klawisz, aby zakończyć...");
+            System.Windows.Forms.MessageBox.Show("Dane zostały zapisane do JSON!");
             Console.ReadKey();
         }
     }
